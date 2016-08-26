@@ -20,9 +20,8 @@ do
 
     # launch privoxy HTTP proxy instances
     mkdir -p "/prixoxydata/" && chmod -R 777 "/prixoxydata"
-    echo -e "listen-address 0.0.0.0:$http_port\nforward-socks5t / 127.0.0.1:$socks_port ." > /prixoxydata/config$i
+    echo -e "confdir /etc/privoxy\nlisten-address 0.0.0.0:$http_port\nforward-socks5t / 127.0.0.1:$socks_port ." > /prixoxydata/config$i
     privoxy --pidfile /prixoxydata/privoxy$i.pid /prixoxydata/config$i
-    sleep 1
 done
 
 # monitor proxies
