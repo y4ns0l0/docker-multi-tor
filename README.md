@@ -1,6 +1,6 @@
 # Tor/HTTP proxy multi instance #
 
-A small docker image with Tor and Privoxy based on Alpine Linux.
+A small docker image with Tor and polipo based on Alpine Linux.
 By default, 10 TOR + prixoxy HTTP proxy instances are launched
 
 ## Running the container

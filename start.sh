@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BASE_SOCKS_PORT=9050
-BASE_HTTP_PORT=3128 # leave 3128 for HAProxy
+BASE_HTTP_PORT=3128
 
 # if defined TOR_INSTANCE env variable sets the number of tor instances (default 10)
 TOR_INSTANCE=${TOR_INSTANCE:=10 }
@@ -19,9 +19,8 @@ do
     tor --RunAsDaemon 1 --PidFile /var/run/tor$i.pid --SocksPort 0.0.0.0:$socks_port --dataDirectory /tordata/tor$i ${TOR_OPTIONS}
 
     # launch privoxy HTTP proxy instances
-    mkdir -p "/prixoxydata/" && chmod -R 777 "/prixoxydata"
-    echo -e "confdir /etc/privoxy\nlisten-address 0.0.0.0:$http_port\nforward-socks5t / 127.0.0.1:$socks_port ." > /prixoxydata/config$i
-    privoxy --pidfile /prixoxydata/privoxy$i.pid /prixoxydata/config$i
+    mkdir -p "/polipodata/" && chmod -R 777 "/polipodata"
+    polipo daemonise=true pidFile=/polipodata/$i proxyAddress=0.0.0.0 proxyPort=$http_port diskCacheRoot=\"\" socksParentProxy=127.0.0.1:$socks_port
 done
 
 # monitor proxies
